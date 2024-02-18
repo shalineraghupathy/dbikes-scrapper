@@ -19,6 +19,7 @@ def main():
         for station in stations:
             latitude = station.get('position', {}).get('lat', 0.0)
             longitude = station.get('position', {}).get('lng', 0.0)
+            
             # # (number, contract_name, name, address, position_lat, position_long, banking, bonus, bike_stands):
             # station_data = data.Station(station['number'], station['contract_name'], station['name'],
             #                             station['address'], latitude, longitude, station['banking'],

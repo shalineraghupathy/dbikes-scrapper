@@ -32,15 +32,10 @@ class Station(Base):
         self.bonus = bonus
         self.bike_stands = bike_stands
     def __str__(self):
-        return f"number = {self.number}, contract_name = {self.contract_name}, name = {self.name}, 
-        address= {self.address}, position_lat= {self.position_lat}, position_long= {self.position_long}, 
-        banking= {self.banking}, bonus= {self.bonus}, bike_stands= {self.bike_stands}"
-        
-        
-        
-        
-       
-        
+        return (f"number = {self.number}, contract_name = {self.contract_name}, name = {self.name}, "
+        f"address= {self.address}, position_lat= {self.position_lat}, position_long= {self.position_long}, "
+        f"banking= {self.banking}, bonus= {self.bonus}, bike_stands= {self.bike_stands}")
+              
 
 
 class Availability(Base):
@@ -61,8 +56,8 @@ class Availability(Base):
         self.last_update = last_update
         self.status = status
     def __str__(self):
-        return f"number= {self.number},  available_bikes= {self.available_bikes}, 
-        available_bike_stands= {self.available_bike_stands}, last_update= {self.last_update}, status= {self.status}"
+        return (f"number= {self.number},  available_bikes= {self.available_bikes}, "
+        f"available_bike_stands= {self.available_bike_stands}, last_update= {self.last_update}, status= {self.status}")
 
 
 # Create a SQLite database engine
