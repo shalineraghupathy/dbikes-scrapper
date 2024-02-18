@@ -3,7 +3,7 @@ import requests
 import config.apiconfig as apiconfig
 import data
 import time
-
+import datetime
 
 def formatdate(value):
     return time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(value))
@@ -49,6 +49,7 @@ def main():
 
             data.add_or_update_station_data(station_data)
             data.add_availability_data(availability_data)
+        print("Records pushed to db",datetime.datetime.now())
         print("Next load starts in 5 minutes")
         time.sleep(5 * 60)
 

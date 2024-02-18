@@ -101,7 +101,7 @@ def add_or_update_station_data(data):
                 # Add new station
                 station = Station(**data)
                 session.add(station)
-                print("Added new station - ", station)
+                # print("Added new station - ", station)
             session.commit()
     except Exception as e:
         print(f"Error: {e}")
@@ -114,6 +114,6 @@ def add_availability_data(data):
             availability = Availability(**data)
             session.add(availability)
             session.commit()
-            print("Added new availability - ", availability)
+            # print("Added new availability - ", availability)
     except Exception as e:
         print(f"Error: {e}")
