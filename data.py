@@ -2,6 +2,9 @@ from sqlalchemy import create_engine, Column, Integer, String, Float, Boolean, F
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 import config.dbconfig as dbconfig
+from sqlalchemy.engine.url import URL
+
+
 
 Base = declarative_base()
 
@@ -61,9 +64,17 @@ class Availability(Base):
 
 
 # Create a SQLite database engine
-engine = create_engine(
-    'mysql+pymysql://' + dbconfig.username + ':' + dbconfig.password + '@' + dbconfig.dbEndpoint + ':'
-    + dbconfig.port + '/' + dbconfig.dbName + '', echo=False)
+db_url = URL.create(
+    drivername='mysql+pymysql',
+    username=dbconfig.username,
+    password=dbconfig.password,
+    host=dbconfig.dbEndpoint,
+    port=dbconfig.port,
+    database=dbconfig.dbName
+)
+
+engine = create_engine(db_url, echo=False)
+
 Base.metadata.create_all(engine)
 
 # Create a session to interact with the database
@@ -76,15 +87,21 @@ def add_or_update_station_data(data):
         with Session() as session:
             existing_station = session.query(Station).filter_by(number=data['number']).first()
 
+            # if existing_station:
+            #     # Update existing station
+            #     for key, value in data.items():
+            #         setattr(existing_station, key, value)
+
             if existing_station:
                 # Update existing station
-                for key, value in data.items():
-                    setattr(existing_station, key, value)
+                keys_to_update = ['contract_name', 'name', 'address', 'position_lat', 'position_long', 'banking', 'bonus', 'bike_stands']
+                for key in keys_to_update:
+                    setattr(existing_station, key, data[key])
             else:
                 # Add new station
                 station = Station(**data)
                 session.add(station)
-                print("Added new station", station)
+                print("Added new station - ", station)
             session.commit()
     except Exception as e:
         print(f"Error: {e}")
@@ -97,6 +114,6 @@ def add_availability_data(data):
             availability = Availability(**data)
             session.add(availability)
             session.commit()
-            print("Added new availability", availability)
+            print("Added new availability - ", availability)
     except Exception as e:
         print(f"Error: {e}")
